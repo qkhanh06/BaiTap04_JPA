@@ -1,0 +1,8 @@
+<sitemesh>
+    <mapping path="/profile" decorator="admin.html" />
+    <mapping path="/profile/update" decorator="admin.html" />
+    <mapping path="/assets/*" exclude="true" />
+    <mapping path="/image" exclude="true" />
+    <mapping path="/login" exclude="true" />
+    <mapping path="/*" exclude="true" />
+</sitemesh>

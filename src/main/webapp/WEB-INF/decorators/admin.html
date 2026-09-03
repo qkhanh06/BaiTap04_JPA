@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title><sitemesh:write property="title" /></title>
+<sitemesh:write property="head" />
+</head>
+<body>
+
+<div class="admin-wrapper app-shell">
+    <aside class="sidebar modern-sidebar">
+        <div class="brand brand-stack">
+            <span class="brand-mark">UT</span>
+            <span>UTEx Store</span>
+        </div>
+
+        <div class="admin-box compact-user">
+            <img src="assets/images/avatar.jpg" class="avatar-img" alt="Avatar">
+            <div class="admin-text">Quản trị cửa hàng</div>
+            <strong>Administrator</strong>
+        </div>
+
+        <nav class="menu modern-menu">
+            <a href="home">Tổng quan</a>
+            <a class="active" href="profile">Hồ sơ cá nhân</a>
+            <a href="admin/category/list">Sản phẩm</a>
+        </nav>
+    </aside>
+
+    <div class="main modern-main">
+        <div class="topbar modern-topbar">
+            <div class="welcome">Quản lý hồ sơ bằng <strong>JPA</strong></div>
+            <a class="logout-btn" href="logout">Đăng xuất</a>
+        </div>
+
+        <main class="content studio-content">
+            <sitemesh:write property="body" />
+        </main>
+    </div>
+</div>
+
+</body>
+</html>
