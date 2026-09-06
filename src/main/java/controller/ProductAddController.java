@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -16,6 +15,7 @@ import service.ProductService;
 import service.impl.CategoryServiceImpl;
 import service.impl.ProductServiceImpl;
 import util.UploadUtil;
+import util.ValidationUtil;
 
 @WebServlet(urlPatterns = {
         "/admin/product/add",
@@ -40,7 +40,7 @@ public class ProductAddController extends HttpServlet {
         request.setAttribute("categories", categoryService.findAll());
         request.getRequestDispatcher(
                 "/views/admin/add-product.jsp")
-                .forward(request, response);
+                .include(request, response);
     }
 
     @Override
@@ -53,6 +53,15 @@ public class ProductAddController extends HttpServlet {
 
         Product product =
                 readProduct(request);
+
+        if (!isValid(request, product)) {
+            request.setAttribute("error", "Vui lòng kiểm tra tên sản phẩm, danh mục và giá bán.");
+            request.setAttribute("product", product);
+            request.setAttribute("price", request.getParameter("price"));
+            request.setAttribute("selectedCategoryId", request.getParameter("categoryId"));
+            doGet(request, response);
+            return;
+        }
 
         String uploadImage =
                 UploadUtil.saveImage(request, "product", "images1");
@@ -72,16 +81,40 @@ public class ProductAddController extends HttpServlet {
         Product product = new Product();
         product.setProductName(request.getParameter("productName"));
         product.setDescription(request.getParameter("description"));
-        product.setPrice(new BigDecimal(request.getParameter("price")));
+        product.setPrice(
+                ValidationUtil.positiveMoney(
+                        request.getParameter("price")));
         product.setImages(request.getParameter("images"));
-        product.setStatus(Integer.parseInt(request.getParameter("status")));
+        product.setStatus(parseInt(request.getParameter("status"), 1));
+
+        int categoryId =
+                parseInt(request.getParameter("categoryId"), 0);
 
         Category category =
-                categoryService.findById(
-                        Integer.parseInt(request.getParameter("categoryId")));
+                categoryId > 0
+                        ? categoryService.findById(categoryId)
+                        : null;
 
         product.setCategory(category);
 
         return product;
+    }
+
+    private boolean isValid(
+            HttpServletRequest request,
+            Product product) {
+
+        return ValidationUtil.hasLength(product.getProductName(), 2, 150)
+                && product.getPrice() != null
+                && !ValidationUtil.isBlank(request.getParameter("categoryId"))
+                && product.getCategory() != null;
+    }
+
+    private int parseInt(String value, int defaultValue) {
+        try {
+            return Integer.parseInt(value);
+        } catch (Exception e) {
+            return defaultValue;
+        }
     }
 }

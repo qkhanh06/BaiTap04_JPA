@@ -11,12 +11,16 @@
 <main class="auth-page">
     <section class="auth-panel">
         <h1>Quên mật khẩu</h1>
-        <p>Nhập email để nhận mã OTP đặt lại mật khẩu.</p>
+        <p>Nhập email để nhận mã xác thực đặt lại mật khẩu.</p>
+
+        <% if (request.getAttribute("error") != null) { %>
+            <div class="error-box"><%= request.getAttribute("error") %></div>
+        <% } %>
 
         <form action="${pageContext.request.contextPath}/forgot-password" method="post" class="form-grid">
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" maxlength="120" required>
             </div>
 
             <div class="form-actions">

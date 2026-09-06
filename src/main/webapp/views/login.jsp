@@ -1,4 +1,4 @@
-<%@ page language="java"
+﻿<%@ page language="java"
     contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -418,8 +418,7 @@ body {
         </h1>
 
         <p>
-            Đăng nhập để truy cập hệ thống quản trị
-            và thực hiện các chức năng quản lý danh mục.
+            �ang nh?p d? qu?n l� c?a h�ng, s?n ph?m v� h? so c� nh�n.
         </p>
 
 
@@ -432,7 +431,7 @@ body {
                 </div>
 
                 <span>
-                    Quản lý danh mục dễ dàng
+                    Quản lý danh mục và sản phẩm
                 </span>
 
             </div>
@@ -445,7 +444,7 @@ body {
                 </div>
 
                 <span>
-                    Hỗ trợ Session và Cookie
+                    C?p nh?t h? so c� nh�n
                 </span>
 
             </div>
@@ -458,7 +457,7 @@ body {
                 </div>
 
                 <span>
-                    Giao diện quản trị trực quan
+                    Giao diện quản trị đồng bộ
                 </span>
 
             </div>
@@ -601,7 +600,7 @@ body {
 
         <div class="login-note">
 
-            Servlet MVC • Jakarta • Tomcat 10.1
+            UTEx Store
 
         </div>
 
@@ -612,3 +611,4 @@ body {
 </body>
 
 </html>
+

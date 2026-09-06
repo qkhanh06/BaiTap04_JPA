@@ -48,6 +48,6 @@ public class CategoryListController extends HttpServlet {
 
         request.getRequestDispatcher(
                 "/views/admin/list-category.jsp")
-                .forward(request, response);
+                .include(request, response);
     }
 }

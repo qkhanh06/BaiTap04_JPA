@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.UserService;
 import service.impl.UserServiceImpl;
+import util.ValidationUtil;
 
 @WebServlet("/activate")
 public class ActivateServlet extends HttpServlet {
@@ -44,15 +45,25 @@ public class ActivateServlet extends HttpServlet {
         String username =
                 request.getParameter("username");
 
+        if (!ValidationUtil.hasLength(username, 3, 50)
+                || !ValidationUtil.isOtp(request.getParameter("otp"))) {
+
+            request.setAttribute("error", "Vui lòng nhập username và OTP gồm 6 số.");
+            request.setAttribute("username", username);
+            request.getRequestDispatcher("/views/activate.jsp")
+                    .forward(request, response);
+            return;
+        }
+
         boolean ok =
                 userService.activate(
                         username,
                         request.getParameter("otp"));
 
         if (ok) {
-            request.setAttribute("success", "Kich hoat thanh cong. Ban co the dang nhap.");
+            request.setAttribute("success", "Kích hoạt thành công. Bạn có thể đăng nhập.");
         } else {
-            request.setAttribute("error", "OTP khong dung hoac da het han.");
+            request.setAttribute("error", "OTP không đúng hoặc đã hết hạn.");
             request.setAttribute("username", username);
         }
 

@@ -19,6 +19,7 @@ import model.User;
 import service.UserService;
 import service.impl.UserServiceImpl;
 import util.Constant;
+import util.ValidationUtil;
 
 @WebServlet(urlPatterns = {
         "/profile",
@@ -68,7 +69,7 @@ public class ProfileServlet extends HttpServlet {
         request.setAttribute("user", user);
 
         request.getRequestDispatcher("/views/profile.jsp")
-               .forward(request, response);
+               .include(request, response);
     }
 
     @Override
@@ -111,6 +112,16 @@ public class ProfileServlet extends HttpServlet {
 
         user.setPhone(
                 request.getParameter("phone"));
+
+        if (!ValidationUtil.hasLength(user.getFullname(), 2, 100)
+                || !ValidationUtil.isPhone(user.getPhone())) {
+
+            request.setAttribute("user", user);
+            request.setAttribute("error", "Vui lòng kiểm tra họ tên và số điện thoại.");
+            request.getRequestDispatcher("/views/profile.jsp")
+                    .include(request, response);
+            return;
+        }
 
         Part imagePart =
                 request.getPart("images");

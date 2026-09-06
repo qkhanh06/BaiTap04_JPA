@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.UserService;
 import service.impl.UserServiceImpl;
+import util.ValidationUtil;
 
 @WebServlet("/forgot-password")
 public class ForgotPasswordServlet extends HttpServlet {
@@ -39,6 +40,13 @@ public class ForgotPasswordServlet extends HttpServlet {
 
         String email =
                 request.getParameter("email");
+
+        if (!ValidationUtil.isEmail(email)) {
+            request.setAttribute("error", "Vui lòng nhập đúng email.");
+            request.getRequestDispatcher("/views/forgot-password.jsp")
+                    .forward(request, response);
+            return;
+        }
 
         userService.createResetOtp(email);
 

@@ -1,8 +1,28 @@
 <sitemesh>
-    <mapping path="/profile" exclude="true" />
-    <mapping path="/profile/update" exclude="true" />
+    <mapping path="/profile" decorator="admin.html" />
+    <mapping path="/profile/update" decorator="admin.html" />
+    <mapping path="/admin/*" decorator="admin.html" />
+    <mapping path="/views/profile.jsp" decorator="admin.html" />
+    <mapping path="/views/admin/*" decorator="admin.html" />
+    <mapping path="/decorators/*" exclude="true" />
+    <mapping path="/WEB-INF/decorators/*" exclude="true" />
     <mapping path="/assets/*" exclude="true" />
     <mapping path="/image" exclude="true" />
+    <mapping path="/" exclude="true" />
+    <mapping path="/home" exclude="true" />
+    <mapping path="/product" exclude="true" />
+    <mapping path="/product/*" exclude="true" />
+    <mapping path="/views/index.jsp" exclude="true" />
+    <mapping path="/views/product.jsp" exclude="true" />
+    <mapping path="/views/product-detail.jsp" exclude="true" />
+    <mapping path="/views/login.jsp" exclude="true" />
+    <mapping path="/views/register.jsp" exclude="true" />
+    <mapping path="/views/activate.jsp" exclude="true" />
+    <mapping path="/views/forgot-password.jsp" exclude="true" />
+    <mapping path="/views/reset-password.jsp" exclude="true" />
     <mapping path="/login" exclude="true" />
-    <mapping path="/*" exclude="true" />
+    <mapping path="/register" exclude="true" />
+    <mapping path="/activate" exclude="true" />
+    <mapping path="/forgot-password" exclude="true" />
+    <mapping path="/reset-password" exclude="true" />
 </sitemesh>

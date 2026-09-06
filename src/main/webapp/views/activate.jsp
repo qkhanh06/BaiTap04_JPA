@@ -11,7 +11,7 @@
 <main class="auth-page">
     <section class="auth-panel">
         <h1>Kích hoạt tài khoản</h1>
-        <p>Nhập mã OTP đã được gửi tới email đăng ký.</p>
+        <p>Nhập mã xác thực đã được gửi tới email đăng ký.</p>
 
         <% if (request.getAttribute("success") != null) { %>
             <div class="success-box"><%= request.getAttribute("success") %></div>
@@ -27,12 +27,14 @@
                        id="username"
                        name="username"
                        value="${username}"
+                       minlength="3"
+                       maxlength="50"
                        required>
             </div>
 
             <div class="form-group">
-                <label for="otp">OTP</label>
-                <input type="text" id="otp" name="otp" maxlength="6" required>
+                <label for="otp">Mã xác thực</label>
+                <input type="text" id="otp" name="otp" pattern="[0-9]{6}" maxlength="6" required>
             </div>
 
             <div class="form-actions">

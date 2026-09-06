@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.UserService;
 import service.impl.UserServiceImpl;
+import util.ValidationUtil;
 
 @WebServlet("/reset-password")
 public class ResetPasswordServlet extends HttpServlet {
@@ -44,6 +45,17 @@ public class ResetPasswordServlet extends HttpServlet {
         String email =
                 request.getParameter("email");
 
+        if (!ValidationUtil.isEmail(email)
+                || !ValidationUtil.isOtp(request.getParameter("otp"))
+                || !ValidationUtil.hasLength(request.getParameter("password"), 6, 100)) {
+
+            request.setAttribute("error", "Vui lòng nhập email, OTP và mật khẩu hợp lệ.");
+            request.setAttribute("email", email);
+            request.getRequestDispatcher("/views/reset-password.jsp")
+                    .forward(request, response);
+            return;
+        }
+
         boolean ok =
                 userService.resetPassword(
                         email,
@@ -51,9 +63,9 @@ public class ResetPasswordServlet extends HttpServlet {
                         request.getParameter("password"));
 
         if (ok) {
-            request.setAttribute("success", "Doi mat khau thanh cong. Ban co the dang nhap.");
+            request.setAttribute("success", "Đổi mật khẩu thành công. Bạn có thể đăng nhập.");
         } else {
-            request.setAttribute("error", "OTP khong dung hoac da het han.");
+            request.setAttribute("error", "OTP không đúng hoặc đã hết hạn.");
             request.setAttribute("email", email);
         }
 

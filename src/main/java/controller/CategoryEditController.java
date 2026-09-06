@@ -19,6 +19,7 @@ import model.Category;
 import service.CategoryService;
 import service.impl.CategoryServiceImpl;
 import util.Constant;
+import util.ValidationUtil;
 
 @WebServlet(urlPatterns = {
         "/admin/category/edit",
@@ -52,7 +53,7 @@ public class CategoryEditController
 
         request.getRequestDispatcher(
                 "/views/admin/edit-category.jsp")
-                .forward(request, response);
+                .include(request, response);
     }
 
     @Override
@@ -77,6 +78,21 @@ public class CategoryEditController
         int status =
                 parseStatus(
                         request.getParameter("status"));
+
+        if (!ValidationUtil.hasLength(name, 2, 50)) {
+            Category invalidCategory =
+                    new Category();
+            invalidCategory.setId(id);
+            invalidCategory.setName(name);
+            invalidCategory.setIcon(request.getParameter("images"));
+            invalidCategory.setStatus(status);
+
+            request.setAttribute("category", invalidCategory);
+            request.setAttribute("error", "Vui lòng nhập tên danh mục từ 2 đến 50 ký tự.");
+            request.getRequestDispatcher("/views/admin/edit-category.jsp")
+                    .include(request, response);
+            return;
+        }
 
         Part iconPart =
                 getPart(request, "images1", "icon");

@@ -33,6 +33,6 @@ public class ProductAdminListController extends HttpServlet {
 
         request.getRequestDispatcher(
                 "/views/admin/list-product.jsp")
-                .forward(request, response);
+                .include(request, response);
     }
 }
