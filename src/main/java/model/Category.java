@@ -1,6 +1,8 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.NamedQuery;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 
@@ -32,6 +35,9 @@ public class Category implements Serializable {
 
     @Column(name = "status")
     private int status = 1;
+
+    @OneToMany(mappedBy = "category")
+    private List<Product> products = new ArrayList<>();
 
     public Category() {
     }
@@ -79,6 +85,14 @@ public class Category implements Serializable {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 
     public int getId() {

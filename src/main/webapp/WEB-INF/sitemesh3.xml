@@ -1,6 +1,6 @@
 <sitemesh>
-    <mapping path="/profile" decorator="admin.html" />
-    <mapping path="/profile/update" decorator="admin.html" />
+    <mapping path="/profile" exclude="true" />
+    <mapping path="/profile/update" exclude="true" />
     <mapping path="/assets/*" exclude="true" />
     <mapping path="/image" exclude="true" />
     <mapping path="/login" exclude="true" />

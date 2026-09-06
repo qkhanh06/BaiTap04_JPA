@@ -1,15 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Category List</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin.css?v=6">
+<title>Product List</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin.css?v=7">
 </head>
 <body>
-
 <div class="admin-wrapper app-shell">
     <aside class="sidebar modern-sidebar">
         <div class="brand brand-stack">
@@ -21,15 +21,15 @@
             <img src="${pageContext.request.contextPath}/assets/images/avatar.jpg?v=2"
                  class="avatar-img"
                  alt="Avatar">
-            <div class="admin-text">Quan tri vien</div>
+            <div class="admin-text">Quản trị cửa hàng</div>
             <strong>${sessionScope.username}</strong>
         </div>
 
         <div class="menu modern-menu">
             <a href="${pageContext.request.contextPath}/home">Trang chủ</a>
             <a href="${pageContext.request.contextPath}/profile">Hồ sơ</a>
-            <a class="active" href="${pageContext.request.contextPath}/admin/categories">Categories</a>
-            <a href="${pageContext.request.contextPath}/admin/products">Products</a>
+            <a href="${pageContext.request.contextPath}/admin/categories">Categories</a>
+            <a class="active" href="${pageContext.request.contextPath}/admin/products">Products</a>
             <a href="${pageContext.request.contextPath}/product">Trang bán hàng</a>
         </div>
     </aside>
@@ -40,22 +40,19 @@
                 <img src="${pageContext.request.contextPath}/assets/images/avatar.jpg?v=2"
                      class="topbar-avatar"
                      alt="Avatar">
-                <div class="welcome">Quản lý <strong>Categories</strong></div>
+                <div class="welcome">Quản lý <strong>Products</strong></div>
             </div>
-            <a class="logout-btn" href="${pageContext.request.contextPath}/logout">Dang xuat</a>
+            <a class="logout-btn" href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
         </div>
 
         <main class="content studio-content">
             <section class="catalog-hero">
                 <div>
-                    <span class="eyebrow">JPA Category</span>
-                    <h1>Danh sach Category</h1>
-                    <p>Du lieu duoc thao tac bang EntityManager va JPQL.</p>
+                    <span class="eyebrow">JPA Product</span>
+                    <h1>Danh sách Product</h1>
+                    <p>Quản lý sản phẩm và ảnh upload bằng Multipart.</p>
                 </div>
-
-                <a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/category/add">
-                    Add Category
-                </a>
+                <a class="btn btn-primary" href="${pageContext.request.contextPath}/admin/product/add">Add Product</a>
             </section>
 
             <section class="card catalog-card">
@@ -65,53 +62,52 @@
                             <tr>
                                 <th>STT</th>
                                 <th>Images</th>
-                                <th>Category name</th>
+                                <th>Product name</th>
+                                <th>Category</th>
+                                <th>Price</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-
                         <tbody>
-                            <c:forEach items="${listcate}" var="cate" varStatus="stt">
+                            <c:forEach items="${products}" var="product" varStatus="stt">
                                 <tr>
                                     <td>${stt.index + 1}</td>
                                     <td>
-                                        <c:if test="${not empty cate.images}">
+                                        <c:if test="${not empty product.images}">
                                             <c:choose>
-                                                <c:when test="${cate.images.startsWith('http')}">
-                                                    <c:url value="${cate.images}" var="imgUrl" />
+                                                <c:when test="${product.images.startsWith('http')}">
+                                                    <c:url value="${product.images}" var="imgUrl" />
                                                 </c:when>
                                                 <c:otherwise>
                                                     <c:url value="/image" var="imgUrl">
-                                                        <c:param name="fname" value="${cate.images}" />
+                                                        <c:param name="fname" value="${product.images}" />
                                                     </c:url>
                                                 </c:otherwise>
                                             </c:choose>
-                                            <img src="${imgUrl}" alt="${cate.categoryname}">
+                                            <img src="${imgUrl}" alt="${product.productName}">
                                         </c:if>
                                     </td>
-                                    <td class="product-name">${cate.categoryname}</td>
-                                    <td>
-                                        <c:if test="${cate.status == 1}">Hoat dong</c:if>
-                                        <c:if test="${cate.status != 1}">Khoa</c:if>
-                                    </td>
+                                    <td class="product-name">${product.productName}</td>
+                                    <td>${product.category.categoryname}</td>
+                                    <td><fmt:formatNumber value="${product.price}" type="currency" currencySymbol="đ"/></td>
+                                    <td>${product.status == 1 ? 'Hoạt động' : 'Khóa'}</td>
                                     <td class="actions-cell">
                                         <a class="btn btn-warning"
-                                           href="${pageContext.request.contextPath}/admin/category/edit?id=${cate.categoryid}">
-                                            Sua
+                                           href="${pageContext.request.contextPath}/admin/product/edit?id=${product.productId}">
+                                            Sửa
                                         </a>
                                         <a class="btn btn-danger"
-                                           onclick="return confirm('Xoa category nay?')"
-                                           href="${pageContext.request.contextPath}/admin/category/delete?id=${cate.categoryid}">
-                                            Xoa
+                                           onclick="return confirm('Xóa product này?')"
+                                           href="${pageContext.request.contextPath}/admin/product/delete?id=${product.productId}">
+                                            Xóa
                                         </a>
                                     </td>
                                 </tr>
                             </c:forEach>
-
-                            <c:if test="${empty listcate}">
+                            <c:if test="${empty products}">
                                 <tr>
-                                    <td colspan="5" class="empty-text">Chua co category nao</td>
+                                    <td colspan="7" class="empty-text">Chưa có product nào</td>
                                 </tr>
                             </c:if>
                         </tbody>
@@ -121,6 +117,5 @@
         </main>
     </div>
 </div>
-
 </body>
 </html>

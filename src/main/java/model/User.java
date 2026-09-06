@@ -31,6 +31,24 @@ public class User implements Serializable {
     @Column(name = "Images", columnDefinition = "nvarchar(500)")
     private String images;
 
+    @Column(name = "Email", columnDefinition = "varchar(120)")
+    private String email;
+
+    @Column(name = "Active")
+    private boolean active;
+
+    @Column(name = "OtpCode", columnDefinition = "varchar(10)")
+    private String otpCode;
+
+    @Column(name = "OtpExpireTime")
+    private java.time.LocalDateTime otpExpireTime;
+
+    @Column(name = "ResetOtpCode", columnDefinition = "varchar(10)")
+    private String resetOtpCode;
+
+    @Column(name = "ResetOtpExpireTime")
+    private java.time.LocalDateTime resetOtpExpireTime;
+
     public User() {
     }
 
@@ -51,6 +69,7 @@ public class User implements Serializable {
         this.fullname = fullname;
         this.phone = phone;
         this.images = images;
+        this.active = true;
     }
 
     public String getUsername() {
@@ -91,5 +110,53 @@ public class User implements Serializable {
 
     public void setImages(String images) {
         this.images = images;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public String getOtpCode() {
+        return otpCode;
+    }
+
+    public void setOtpCode(String otpCode) {
+        this.otpCode = otpCode;
+    }
+
+    public java.time.LocalDateTime getOtpExpireTime() {
+        return otpExpireTime;
+    }
+
+    public void setOtpExpireTime(java.time.LocalDateTime otpExpireTime) {
+        this.otpExpireTime = otpExpireTime;
+    }
+
+    public String getResetOtpCode() {
+        return resetOtpCode;
+    }
+
+    public void setResetOtpCode(String resetOtpCode) {
+        this.resetOtpCode = resetOtpCode;
+    }
+
+    public java.time.LocalDateTime getResetOtpExpireTime() {
+        return resetOtpExpireTime;
+    }
+
+    public void setResetOtpExpireTime(java.time.LocalDateTime resetOtpExpireTime) {
+        this.resetOtpExpireTime = resetOtpExpireTime;
     }
 }

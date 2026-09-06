@@ -17,15 +17,31 @@
             <span>UTEx Store</span>
         </div>
 
+        <div class="admin-box compact-user">
+            <img src="${pageContext.request.contextPath}/assets/images/avatar.jpg?v=2"
+                 class="avatar-img"
+                 alt="Avatar">
+            <div class="admin-text">Quản trị cửa hàng</div>
+            <strong>${sessionScope.username}</strong>
+        </div>
+
         <div class="menu modern-menu">
-            <a href="${pageContext.request.contextPath}/home">Tong quan</a>
+            <a href="${pageContext.request.contextPath}/home">Trang chủ</a>
+            <a href="${pageContext.request.contextPath}/profile">Hồ sơ</a>
             <a class="active" href="${pageContext.request.contextPath}/admin/categories">Categories</a>
+            <a href="${pageContext.request.contextPath}/admin/products">Products</a>
+            <a href="${pageContext.request.contextPath}/product">Trang bán hàng</a>
         </div>
     </aside>
 
     <div class="main modern-main">
         <div class="topbar modern-topbar">
-            <div class="welcome">Edit Category: <strong>${category.categoryname}</strong></div>
+            <div class="topbar-user">
+                <img src="${pageContext.request.contextPath}/assets/images/avatar.jpg?v=2"
+                     class="topbar-avatar"
+                     alt="Avatar">
+                <div class="welcome">Edit Category: <strong>${category.categoryname}</strong></div>
+            </div>
             <a class="logout-btn" href="${pageContext.request.contextPath}/logout">Dang xuat</a>
         </div>
 

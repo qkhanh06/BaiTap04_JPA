@@ -3,6 +3,8 @@ package dao.impl;
 import dao.UserDao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.TypedQuery;
 import model.User;
 import util.JpaUtil;
 
@@ -62,6 +64,29 @@ public class UserDaoImpl implements UserDao {
 
         try {
             return em.find(User.class, username);
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public User findByEmail(String email) {
+
+        EntityManager em =
+                JpaUtil.getEntityManager();
+
+        String jpql =
+                "SELECT u FROM User u WHERE u.email = :email";
+
+        try {
+            TypedQuery<User> query =
+                    em.createQuery(jpql, User.class);
+
+            query.setParameter("email", email);
+
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
         } finally {
             em.close();
         }

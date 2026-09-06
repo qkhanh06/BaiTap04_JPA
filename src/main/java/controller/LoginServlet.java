@@ -174,7 +174,7 @@ public class LoginServlet extends HttpServlet {
 
             request.setAttribute(
                     "error",
-                    "Tài khoản hoặc mật khẩu không đúng!");
+                    "Tài khoản chưa kích hoạt hoặc mật khẩu không đúng!");
 
             request.setAttribute(
                     "rememberUsername",

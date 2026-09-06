@@ -10,7 +10,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import service.CategoryService;
+import service.ProductService;
 import service.impl.CategoryServiceImpl;
+import service.impl.ProductServiceImpl;
 
 @WebServlet("/home")
 public class HomeServlet extends HttpServlet {
@@ -20,25 +22,17 @@ public class HomeServlet extends HttpServlet {
     private final CategoryService categoryService =
             new CategoryServiceImpl();
 
+    private final ProductService productService =
+            new ProductServiceImpl();
+
     @Override
     protected void doGet(
             HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Kiểm tra đăng nhập
         HttpSession session =
                 request.getSession(false);
-
-        if (session == null
-                || session.getAttribute("username") == null) {
-
-            response.sendRedirect(
-                    request.getContextPath()
-                    + "/login");
-
-            return;
-        }
 
         // Đếm số lượng Category
         try {
@@ -50,11 +44,22 @@ public class HomeServlet extends HttpServlet {
                     "categoryCount",
                     categoryCount);
 
+            request.setAttribute(
+                    "productCount",
+                    productService.count());
+
+            request.setAttribute(
+                    "latestProducts",
+                    productService.findLatest(10));
+
         } catch (Exception e) {
 
-            // Nếu database lỗi thì Dashboard vẫn mở
             request.setAttribute(
                     "categoryCount",
+                    0);
+
+            request.setAttribute(
+                    "productCount",
                     0);
         }
 

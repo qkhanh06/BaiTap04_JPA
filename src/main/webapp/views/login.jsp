@@ -576,6 +576,15 @@ body {
 
             </div>
 
+            <div class="remember-row">
+                <a href="${pageContext.request.contextPath}/forgot-password">
+                    Quên mật khẩu?
+                </a>
+                <a href="${pageContext.request.contextPath}/register">
+                    Đăng ký
+                </a>
+            </div>
+
 
             <!-- BUTTON -->
 

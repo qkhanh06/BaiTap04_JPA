@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>UTEx Store</title>
+<title>Sản phẩm</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin.css?v=7">
 </head>
 <body>
@@ -27,28 +27,13 @@
         </div>
     </nav>
 
-    <section class="store-landing">
-        <div>
-            <span class="eyebrow">UTEx Store</span>
-            <h1>Sản phẩm mới nhất</h1>
-            <p>Khám phá những sản phẩm vừa được cập nhật trong cửa hàng.</p>
-            <a class="btn btn-primary" href="${pageContext.request.contextPath}/product">Xem tất cả</a>
-        </div>
-    </section>
-
-    <section class="store-stats">
-        <div>
-            <span>Products</span>
-            <strong>${productCount}</strong>
-        </div>
-        <div>
-            <span>Categories</span>
-            <strong>${categoryCount}</strong>
-        </div>
+    <section class="store-heading">
+        <h1>Tất cả sản phẩm</h1>
+        <p>Danh sách sản phẩm được sắp xếp theo thời gian tạo mới nhất.</p>
     </section>
 
     <section class="product-grid">
-        <c:forEach items="${latestProducts}" var="product">
+        <c:forEach items="${products}" var="product">
             <article class="product-card">
                 <a href="${pageContext.request.contextPath}/product/detail?id=${product.productId}">
                     <c:if test="${not empty product.images}">
@@ -70,11 +55,16 @@
                 </a>
             </article>
         </c:forEach>
-
-        <c:if test="${empty latestProducts}">
-            <div class="empty-store">Chưa có sản phẩm nào.</div>
-        </c:if>
     </section>
+
+    <div class="pagination">
+        <c:forEach begin="1" end="${totalPages}" var="page">
+            <a class="${page == currentPage ? 'active' : ''}"
+               href="${pageContext.request.contextPath}/product?page=${page}">
+                ${page}
+            </a>
+        </c:forEach>
+    </div>
 </main>
 </body>
 </html>
